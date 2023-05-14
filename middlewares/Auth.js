@@ -4,17 +4,18 @@ import { UnauthenticatedError } from "../utils/Error.js"
 
 
 function verifyToken(req,res,next) {
+    const authHeader = req.headers.authorization 
     if(!authHeader || !authHeader.startsWith("Bearer")) {
-        throw new UnauthenticatedError('Invalid authentication')
+        throw new UnauthenticatedError('Invalid authentication!')
     }
 
-    const token = authHeader.split(' ')[1]
-
+    const token = authHeader.split(' ')[1] 
     try {
         const payload = jwt.verify(token,process.env.JWT_SECRET)
-        req.user = {userId:payload.userId,name:payload.name}
+        req.user = {userId:payload.userId,name:payload.name} 
+        next()
     } catch(err) {
-        throw new UnauthenticatedError('Invalid authentication')
+        throw new UnauthenticatedError('Invalid authentication!')
     }
 }
 
