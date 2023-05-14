@@ -4,17 +4,17 @@ class CustomAPIError extends Error {
     }
 }
 
-class BadRequest extends CustomAPIError {
+class BadRequestError extends CustomAPIError {
     constructor(message) {
         super(message)
         this.statusCode = 400
     }
 }
-class Unauthenticated extends CustomAPIError {
+class UnauthenticatedError extends CustomAPIError {
     constructor(message) {
         super(message)
         this.statusCode = 401
     }
 }
 
-export {CustomAPIError,BadRequest,Unauthenticated}
+export {CustomAPIError,BadRequestError,UnauthenticatedError}

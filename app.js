@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(errorHandlerMiddleware)
 
 // Routes
-app.use('/',(req,res) => {res.send('Jobs API portal')})
+app.get('/',(req,res) => {res.send('Jobs API portal')})
 app.use('/jobs',jobRoute)
 app.use('/auth',authRoute)
 
