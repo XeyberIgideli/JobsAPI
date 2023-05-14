@@ -1,5 +1,6 @@
 import express from 'express'
 import { errorHandlerMiddleware } from './middlewares/Error.js'
+import { verifyToken } from './middlewares/Auth.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 // Routes import
@@ -25,7 +26,7 @@ app.use(errorHandlerMiddleware)
 
 // Routes
 app.get('/',(req,res) => {res.send('Jobs API portal')})
-app.use('/jobs',jobRoute)
+app.use('/jobs',verifyToken,jobRoute)
 app.use('/auth',authRoute)
 
 app.listen(port)

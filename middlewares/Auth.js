@@ -17,3 +17,5 @@ function verifyToken(req,res,next) {
         throw new UnauthenticatedError('Invalid authentication')
     }
 }
+
+export {verifyToken}
