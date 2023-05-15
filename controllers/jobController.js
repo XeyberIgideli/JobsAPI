@@ -2,15 +2,16 @@ import Job from "../models/Job.js"
 import { BadRequestError,UnauthenticatedError } from "../utils/Error.js"
 
 async function getAllJobs (req,res) {
-    try { 
-        const job = await Job.find()
+    try {  
+        const job = await Job.find({createdBy:req.user.userId})
         res.status(200).json(job)
     } catch(err) {
         throw new BadRequestError('Something went wrong!:(')
     }
 }
-function getJob (req,res) {
-
+async function getJob (req,res) {
+    const job = await Job.findOne({createdBy:req.user.userId})
+    res.status(201).json(job)
 }
 async function createJob (req,res) {
     try {
