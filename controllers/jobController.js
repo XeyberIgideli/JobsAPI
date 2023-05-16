@@ -9,9 +9,13 @@ async function getAllJobs (req,res) {
         throw new BadRequestError('Something went wrong!:(')
     }
 }
-async function getJob (req,res) {
-    const job = await Job.findOne({_id:req.params.id}) 
-    res.status(201).json(job)
+async function getJob (req,res,next) {
+   try {
+        const job = await Job.findOne({_id:req.params.id}) 
+        res.status(201).json(job)
+   } catch(err) {
+        next(err)
+   }
 }
 async function createJob (req,res) {
     try {
@@ -40,7 +44,7 @@ async function deleteJob (req,res) {
     const job = await Job.findByIdAndRemove({_id:req.params.id})
 
     if(!job) {
-        throw new NotFoundError('There is not job like this!')
+        throw new NotFoundError('There is not job like this')
     }
 
     res.status(201).send('Job deleted!')
