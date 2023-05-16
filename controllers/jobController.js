@@ -41,6 +41,7 @@ async function updateJob (req,res) {
     res.status(201).json(job)
 }
 async function deleteJob (req,res) {
+    try {
     const job = await Job.findByIdAndRemove({_id:req.params.id})
 
     if(!job) {
@@ -48,6 +49,9 @@ async function deleteJob (req,res) {
     }
 
     res.status(201).send('Job deleted!')
+} catch {
+        throw new BadRequestError('Something went wrong!:(')
+    }
 }
 
 export {getAllJobs,getJob,createJob,updateJob,deleteJob}

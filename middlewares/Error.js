@@ -1,11 +1,9 @@
-import { CustomAPIError } from "../utils/Error.js"
-
 function errorHandlerMiddleware (err,req,res,next) {
     const customErr = {
         statusCode: err.statusCode || 500,
         msg: err.message || 'Something went wrong. Please try again!'
     }  
-    
+
     if(err.name === 'ValidationError') {
         customErr.statusCode = 400
         customErr.msg = Object.values(err.errors).map(item => item.message).join(',')

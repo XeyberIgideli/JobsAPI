@@ -22,7 +22,7 @@ async function register (req,res,next) {
     }
 }
 
-async function login(req,res) {
+async function login(req,res,next) {
     try {
         const {email,password} = req.body
 
@@ -31,12 +31,14 @@ async function login(req,res) {
         }
     
         const user = await User.findOne({email})
-        const isPassCorrect = await user.isPasswordCorrect(password)
+        
         if(!user) {
-            throw new UnauthenticatedError()
+            throw new UnauthenticatedError('There is not user like this!')
         }
+        const isPassCorrect = await user.isPasswordCorrect(password)
+
         if(!isPassCorrect) {
-            throw new BadRequestError()
+            throw new BadRequestError('Password is not correct!')
         }
     
         const token = user.createJWT()
